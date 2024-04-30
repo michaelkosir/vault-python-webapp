@@ -1,0 +1,36 @@
+[Unit]
+Description="Gunicorn - A Python WSGI HTTP Server for UNIX"
+Documentation=https://gunicorn.org/#docs
+Requires=network-online.target vault-agent.service vault-proxy.service
+After=network-online.target vault-agent.service vault-proxy.service
+StartLimitIntervalSec=60
+StartLimitBurst=3
+
+[Service]
+Type=notify
+User=www-data
+Group=www-data
+ProtectSystem=full
+ProtectHome=read-only
+PrivateTmp=yes
+PrivateDevices=yes
+SecureBits=keep-caps
+NoNewPrivileges=yes
+WorkingDirectory=/opt/webapp
+ExecStart=/opt/webapp/venv/bin/gunicorn src.main:app \
+  --bind 0.0.0.0:8000 \
+  --workers 4 \
+  --worker-class uvicorn.workers.UvicornWorker \
+  --certfile=/opt/webapp/tls/server.pem \
+  --keyfile=/opt/webapp/tls/server.key
+ExecReload=/bin/kill --signal HUP $MAINPID
+KillMode=mixed
+KillSignal=SIGTERM
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+LimitNOFILE=65536
+LimitMEMLOCK=infinity
+
+[Install]
+WantedBy=multi-user.target

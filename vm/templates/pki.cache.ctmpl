@@ -1,0 +1,6 @@
+{{- with pkiCert "pki/issue/demo" "common_name=webapp.example.com" "ttl=24h" -}}
+{{ .Data.Key }}{{ .Data.Cert }}{{ .Data.CA }}
+{{- .Key | writeToFile "/opt/webapp/tls/server.key" "vault" "www-data" "640" }}
+{{- .Cert | writeToFile "/opt/webapp/tls/server.pem" "vault" "www-data" "644" "newline" }}
+{{- .CA | writeToFile "/opt/webapp/tls/server.pem" "vault" "www-data" "644" "append" }}
+{{- end -}}
