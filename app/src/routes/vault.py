@@ -1,6 +1,7 @@
 from src.vault import vault
 
 from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
 
 
 router = APIRouter(
@@ -9,32 +10,36 @@ router = APIRouter(
 )
 
 
+class Data(BaseModel):
+    message: str
+
+
 @router.get("/random")
 async def random(bytes: int = 64):
     return {"message": vault.random(bytes)}
 
 
-@router.get("/encrypt")
-async def transit_encrypt(message: str):
-    return {"message": vault.encrypt(message)}
+@router.post("/encrypt")
+async def transit_encrypt(data: Data):
+    return {"message": vault.encrypt(data.message)}
 
 
-@router.get("/decrypt")
-async def transit_decrypt(message: str):
-    return {"message": vault.decrypt(message)}
+@router.post("/decrypt")
+async def transit_decrypt(data: Data):
+    return {"message": vault.decrypt(data.message)}
 
 
-@router.get("/encode")
-async def transform_encode(message: str):
+@router.post("/encode")
+async def transform_encode(data: Data):
     try:
-        return {"message": vault.encode(message)}
+        return {"message": vault.encode(data.message)}
     except:
         raise HTTPException(status_code=500, detail="Requires Vault Enterprise")
 
 
-@router.get("/decode")
-async def transform_decode(message: str):
+@router.post("/decode")
+async def transform_decode(data: Data):
     try:
-        return {"message": vault.decode(message)}
+        return {"message": vault.decode(data.message)}
     except:
         raise HTTPException(status_code=500, detail="Requires Vault Enterprise")

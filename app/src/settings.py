@@ -30,7 +30,7 @@ class DatabaseSettings(BaseSettings):
 class VaultSettings(BaseSettings):
     model_config = SettingsConfigDict(env_file="./env/vault.env", env_prefix="vault_")
 
-    proxy_address: str = "127.0.0.1:8100"
+    proxy_address: str = "127.0.0.1:8200"
     transit_mount: str = "transit"
     transit_key: str = "example"
     transform_mount: str = "transform"
