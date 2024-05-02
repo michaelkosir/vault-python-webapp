@@ -7,16 +7,19 @@
 
 Start the Ubuntu virtual machine
 ```shell
-$ multipass launch -n demo --cloud-init base.yml
+$ multipass launch -n demo -c4 -m4G --cloud-init base.yml
+```
+
+SSH into the demo VM
+```shell
+$ multipass shell demo
 ```
 
 Check the TTL of the certificate. We use `--insecure` because the demo uses a self-signed certificate.
 
 Here we can we can see the `subject`, `issuer`, `start date`, and `end date`.
 ```shell
-$ export DEMO_IP=$(multipass exec demo -- hostname -I | awk {'print $1'})
-
-$ curl --insecure -vvI https://$DEMO_IP:8000 2>&1 | grep -A4 "Server certificate"
+$ curl --insecure -vvI https://localhost:8000 2>&1 | grep -A4 "Server certificate"
 
 * Server certificate:
 *  subject: CN=webapp.example.com
@@ -28,7 +31,7 @@ $ curl --insecure -vvI https://$DEMO_IP:8000 2>&1 | grep -A4 "Server certificate
 Hit the various endpoints. We use `--insecure` because the demo uses a self-signed certificate.
 
 ```shell
-$ curl -s --insecure -X POST "https://$DEMO_IP:8000/vault/encrypt" \
+$ curl -s --insecure -X POST "https://localhost:8000/vault/encrypt" \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{"message": "hello"}'
@@ -39,7 +42,7 @@ $ curl -s --insecure -X POST "https://$DEMO_IP:8000/vault/encrypt" \
 ```
 
 ```shell
-$ curl -s --insecure -X POST "https://$DEMO_IP:8000/vault/decrypt" \
+$ curl -s --insecure -X POST "https://localhost:8000/vault/decrypt" \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{"message": "vault:v1:T2r9P2w38PY9Sbvv6D0pXMZYQeIm9ho1CktvkvBw6cnq"}'
@@ -50,7 +53,7 @@ $ curl -s --insecure -X POST "https://$DEMO_IP:8000/vault/decrypt" \
 ```
 
 ```shell
-$ curl -s --insecure "https://$DEMO_IP:8000/vault/random" | jq          
+$ curl -s --insecure "https://localhost:8000/vault/random" | jq          
 
 {
   "message": "KHFCr4Y8Cc7KbZ5WsLhWPxJn6PKKg6iBFtLC20Jjxc021fdKIwVn0r0+noWrTOMv16Q67nXXDPzOuk/RBILEdg=="
@@ -58,7 +61,7 @@ $ curl -s --insecure "https://$DEMO_IP:8000/vault/random" | jq
 ```
 
 ```shell
-$ curl -s --insecure "https://$DEMO_IP:8000/sys/info" | jq    
+$ curl -s --insecure "https://localhost:8000/sys/info" | jq    
 
 {
   "app": {
@@ -88,10 +91,15 @@ $ curl -s --insecure "https://$DEMO_IP:8000/sys/info" | jq
 }
 ```
 
+Perform load test to verify successful turnover of credentials.
+```
+$ vegeta attack -insecure -targets=targets.txt -rate=200 -duration=2m | vegeta report
+```
+
 View the `gunicorn` logs to verify turnover of worker processes.
 
 ```shell
-$ multipass exec demo -- journalctl -u gunicorn -n 100 | grep hup -A 40
+$ journalctl -u gunicorn -n 100 | grep hup -A 40
 
 ... Handling signal: hup
 ... Hang up: Master
@@ -133,7 +141,8 @@ $ multipass exec demo -- journalctl -u gunicorn -n 100 | grep hup -A 40
 ... Application startup complete.
 ```
 
-Stop, delete, and purge the Ubuntu virtual machine
+Exit, Stop, delete, and purge the Ubuntu virtual machine
 ```shell
+$ exit
 $ multipass delete --purge demo
 ```
