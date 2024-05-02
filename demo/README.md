@@ -92,8 +92,17 @@ $ curl -s --insecure "https://localhost:8000/sys/info" | jq
 ```
 
 Perform load test to verify successful turnover of credentials.
-```
-$ vegeta attack -insecure -targets=targets.txt -rate=200 -duration=2m | vegeta report
+```shell
+$ echo "GET https://127.0.0.1:8000/db/users" | vegeta attack -insecure -rate=200 -duration=2m | vegeta report
+
+Requests      [total, rate, throughput]  24000, 199.99, 199.99
+Duration      [total, attack, wait]      2m0.005958897s, 2m0.004716528s, 1.242369ms
+Latencies     [mean, 50, 95, 99, max]    6.078095ms, 1.615464ms, 4.275567ms, 198.391765ms, 390.333588ms
+Bytes In      [total, mean]              48000, 2.00
+Bytes Out     [total, mean]              0, 0.00
+Success       [ratio]                    100.00%
+Status Codes  [code:count]               200:24000  
+Error Set:
 ```
 
 View the `gunicorn` logs to verify turnover of worker processes.

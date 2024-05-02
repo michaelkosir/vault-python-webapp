@@ -19,21 +19,13 @@ packages:
   - vault
   - python3.10-venv
 
-# Used in Vegeta HTTP Load Testing
-write_files:
-  owner: ubuntu:ubuntu
-  path: /home/ubuntu/targets.txt
-  content: |
-    GET https://127.0.0.1:8000/db/users
-    Accept: application/json
-
 runcmd:
   - usermod -aG docker ubuntu
-  - sudo snap install go --classic
-  - go install github.com/tsenart/vegeta@latest
 
-  - echo "export GOPATH=$HOME/go" >> /home/ubuntu/.bashrc
-  - echo "export PATH=$PATH:$GOROOT/bin:$GOPATH/bin" >> /home/ubuntu/.bashrc
+  - snap install go --classic
+  - sudo -u ubuntu go install github.com/tsenart/vegeta@latest
+  - echo "export GOPATH=/home/ubuntu/go" >> /home/ubuntu/.bashrc
+  - echo "export PATH=$PATH:/home/ubuntu/go/bin" >> /home/ubuntu/.bashrc
 
   - export POSTGRES_PASSWORD=$(uuidgen)
   - export VAULT_ADDR=http://localhost:8200
