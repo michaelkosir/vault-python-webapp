@@ -7,7 +7,9 @@
 
 Start the Ubuntu virtual machine
 ```shell
-$ multipass launch -n demo -c4 -m4G --cloud-init base.yml
+$ git clone ...
+$ cd ...
+$ multipass launch --name="demo" --cpus="4" --memory="2G" --cloud-init="./demo/base.yml"
 ```
 
 SSH into the demo VM

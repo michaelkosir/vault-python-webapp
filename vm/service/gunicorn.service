@@ -19,7 +19,7 @@ NoNewPrivileges=yes
 WorkingDirectory=/opt/webapp
 ExecStart=/opt/webapp/venv/bin/gunicorn src.main:app \
   --bind 0.0.0.0:8000 \
-  --workers 4 \
+  --workers 2 \
   --worker-class uvicorn.workers.UvicornWorker \
   --certfile=/opt/webapp/tls/server.pem \
   --keyfile=/opt/webapp/tls/server.key
