@@ -15,7 +15,7 @@ class AWS:
 
 
 aws = AWS(
-    access_key=settings.aws.access_key,
-    secret_key=settings.aws.secret_key,
+    access_key=settings.aws.access_key_id,
+    secret_key=settings.aws.secret_access_key,
     session_token=settings.aws.session_token,
 )
