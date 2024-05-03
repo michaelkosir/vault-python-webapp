@@ -42,6 +42,7 @@ chmod 640 /etc/vault.d/auth/*
 ##################
 vault secrets enable -version=2 kv
 vault kv put kv/demo \
+    app_name="Awesome API" \
     app_admin_email="foo@example.com" \
     app_api_key=$(uuidgen) \
     db_host="127.0.0.1" \
