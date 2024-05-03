@@ -15,6 +15,12 @@ python3 -m venv /opt/webapp/venv
 
 mkdir /opt/webapp/tls
 mkdir /opt/webapp/env
+
+# demo purposes, not using AWS
+echo 'AWS_ACCESS_KEY_ID="..."'      > /opt/webapp/env/aws.env
+echo 'AWS_SECRET_ACCESS_KEY="..."' >> /opt/webapp/env/aws.env
+echo 'AWS_SESSION_TOKEN="..."'     >> /opt/webapp/env/aws.env
+
 chown -R www-data:www-data /opt/webapp
 chown vault:www-data /opt/webapp/tls
 chown vault:www-data /opt/webapp/env
