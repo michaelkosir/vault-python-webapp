@@ -17,7 +17,7 @@ PrivateDevices=yes
 SecureBits=keep-caps
 NoNewPrivileges=yes
 WorkingDirectory=/opt/webapp
-ExecStartPre=/bin/bash -c '[[ $(ls -A /opt/webapp/tls) ]] || /usr/bin/inotifywait -e create -t 60 /opt/webapp/tls > /dev/null 2>&1'
+ExecStartPre=/bin/bash -c '[[ $(ls -A /opt/webapp/tls) ]] || /usr/bin/inotifywait -e create -t 60 /opt/webapp/tls'
 ExecStart=/opt/webapp/venv/bin/gunicorn src.main:app \
   --bind 0.0.0.0:8000 \
   --workers 2 \

@@ -24,7 +24,7 @@ template {
   perms = "640"
   group = "www-data"
   exec = {
-    command = "systemctl reload gunicorn.service || true"
+    command = "systemctl is-active -q gunicorn && systemctl reload gunicorn.service || true"
   }
 }
 
@@ -34,7 +34,7 @@ template {
   perms = "640"
   group = "www-data"
   exec = {
-    command = "systemctl reload gunicorn.service || true"
+    command = "systemctl is-active -q gunicorn && systemctl reload gunicorn.service || true"
   }
 }
 
@@ -44,7 +44,7 @@ template {
   perms = "640"
   group = "www-data"
   exec = {
-    command = "systemctl reload gunicorn.service || true"
+    command = "systemctl is-active -q gunicorn && systemctl reload gunicorn.service || true"
   }
 }
 
@@ -55,7 +55,7 @@ template {
 //   perms = "640"
 //   group = "www-data"
 //   exec = {
-//     command = "systemctl reload gunicorn.service || true"
+//     command = "systemctl is-active -q gunicorn && systemctl reload gunicorn.service || true"
 //   }
 // }
 
@@ -64,6 +64,6 @@ template {
   destination = "/opt/webapp/tls/cache"
   perms = "600"
   exec = {
-    command = "systemctl reload gunicorn.service || true"
+    command = "systemctl is-active -q gunicorn && systemctl reload gunicorn.service || true"
   }
 }

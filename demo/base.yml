@@ -18,7 +18,6 @@ packages:
   - docker-compose-plugin
   - vault
   - python3.10-venv
-  - inotify-tools
 
 runcmd:
   - usermod -aG docker ubuntu
