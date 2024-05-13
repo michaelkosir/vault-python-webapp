@@ -72,8 +72,8 @@ vault write pgsql/config/demo \
 vault write pgsql/roles/demo \
   db_name="demo" \
   creation_statements="CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}' SUPERUSER;" \
-  default_ttl="10s" \
-  max_ttl="20s"
+  default_ttl="5s" \
+  max_ttl="10s"
 
 
 ##################
