@@ -1,5 +1,5 @@
 vault {
-  address = "http://127.0.0.1:8200"
+  address = "http://127.0.0.1:8200" # vault.example.com
 }
 
 auto_auth {
@@ -24,7 +24,7 @@ template {
   perms = "640"
   group = "www-data"
   exec = {
-    command = "systemctl is-active -q gunicorn && systemctl reload gunicorn.service || true"
+    command = "systemctl is-active -q gunicorn && systemctl reload gunicorn || true"
   }
 }
 
@@ -34,7 +34,7 @@ template {
   perms = "640"
   group = "www-data"
   exec = {
-    command = "systemctl is-active -q gunicorn && systemctl reload gunicorn.service || true"
+    command = "systemctl is-active -q gunicorn && systemctl reload gunicorn || true"
   }
 }
 
@@ -44,7 +44,7 @@ template {
   perms = "640"
   group = "www-data"
   exec = {
-    command = "systemctl is-active -q gunicorn && systemctl reload gunicorn.service || true"
+    command = "systemctl is-active -q gunicorn && systemctl reload gunicorn || true"
   }
 }
 
@@ -55,7 +55,7 @@ template {
 //   perms = "640"
 //   group = "www-data"
 //   exec = {
-//     command = "systemctl is-active -q gunicorn && systemctl reload gunicorn.service || true"
+//     command = "systemctl is-active -q gunicorn && systemctl reload gunicorn || true"
 //   }
 // }
 
@@ -64,6 +64,6 @@ template {
   destination = "/opt/webapp/tls/cache"
   perms = "600"
   exec = {
-    command = "systemctl is-active -q gunicorn && systemctl reload gunicorn.service || true"
+    command = "systemctl is-active -q gunicorn && systemctl reload gunicorn || true"
   }
 }
