@@ -4,25 +4,26 @@ apt:
     hashicorp:
       source: "deb https://apt.releases.hashicorp.com $RELEASE main"
       keyid: 798AEC654E5C15428C8E42EEAA16FCBCA621E701
-
     docker:
       source: "deb https://download.docker.com/linux/ubuntu $RELEASE stable"
       keyid: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
 
 packages:
-  - vault
-  - jq
-  - docker-ce
-  - docker-ce-cli
-  - containerd.io
-  - docker-buildx-plugin
-  - docker-compose-plugin
-  - python3.10-venv
+  - apt:
+      - vault
+      - jq
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+      - python3.10-venv
+  - snap:
+      - [go, --classic]
 
 runcmd:
   - usermod -aG docker ubuntu
 
-  - snap install go --classic
   - sudo -u ubuntu go install github.com/tsenart/vegeta@latest
   - echo "export GOPATH=/home/ubuntu/go" >> /home/ubuntu/.bashrc
   - echo "export PATH=$PATH:/home/ubuntu/go/bin" >> /home/ubuntu/.bashrc

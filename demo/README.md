@@ -9,7 +9,7 @@ Start the Ubuntu virtual machine
 ```shell
 $ git clone ...
 $ cd ...
-$ multipass launch --name="demo" --cpus="4" --memory="2G" --cloud-init="./demo/base.yml"
+$ multipass launch --name="demo" --cpus="4" --memory="2G" --cloud-init="./demo/base.yml" jammy
 ```
 
 SSH into the demo VM
