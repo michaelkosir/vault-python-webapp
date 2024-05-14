@@ -7,6 +7,8 @@ ConditionFileNotEmpty=/etc/vault.d/agent.hcl
 StartLimitIntervalSec=60
 StartLimitBurst=3
 
+# using root:root for demo purposes
+# use least priv. in production
 [Service]
 Type=notify
 User=root
