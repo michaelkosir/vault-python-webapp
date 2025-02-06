@@ -1,4 +1,4 @@
-from src.aws import aws
+from src.clients.aws import aws
 
 from fastapi import APIRouter, HTTPException
 

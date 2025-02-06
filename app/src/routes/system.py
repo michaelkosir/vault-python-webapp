@@ -1,5 +1,4 @@
 from src.settings import settings
-from src.aws import aws
 
 from fastapi import APIRouter
 

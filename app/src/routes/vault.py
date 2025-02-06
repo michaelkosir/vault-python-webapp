@@ -1,4 +1,4 @@
-from src.vault import vault
+from src.clients.vault import vault
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
@@ -33,7 +33,7 @@ async def transit_decrypt(data: Data):
 async def transform_encode(data: Data):
     try:
         return {"message": vault.encode(data.message)}
-    except:
+    except Exception:
         raise HTTPException(status_code=500, detail="Requires Vault Enterprise")
 
 
@@ -41,5 +41,5 @@ async def transform_encode(data: Data):
 async def transform_decode(data: Data):
     try:
         return {"message": vault.decode(data.message)}
-    except:
+    except Exception:
         raise HTTPException(status_code=500, detail="Requires Vault Enterprise")

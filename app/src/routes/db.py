@@ -1,4 +1,4 @@
-from src.db import engine, BaseUser, User
+from src.clients.db import engine, BaseUser, User
 
 
 from sqlmodel import Session, select

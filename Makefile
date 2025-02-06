@@ -8,7 +8,8 @@ help:	## Show this help message
 
 venv:	## Setup Python virtual environment
 	@python3 -m venv ./app/venv
-	@./app/venv/bin/pip install --upgrade pip && ./app/venv/bin/pip install -r ./app/requirements.txt
+	@./app/venv/bin/pip install --upgrade pip 
+	@./app/venv/bin/pip install -r ./app/requirements.txt
 
 env:	## Setup dotenv files for local testing
 	@mkdir ./app/env > /dev/null 2>&1 || true
